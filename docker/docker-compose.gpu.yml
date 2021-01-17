@@ -15,7 +15,10 @@ services:
     volumes:
       - .:/home/$user_name/workspace
     working_dir: /home/$user_name/workspace
+    sysctls:
+      - net.core.somaxconn=$somaxconn
+      - net.ipv4.tcp_syncookies=0
     ports:
-      - "4141:4141"   # kedro-viz
       - "5000:5000"   # MLflow
       - "6006:6006"   # tensorboard
+      - "8000:8000"   # webapi

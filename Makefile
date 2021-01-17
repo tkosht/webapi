@@ -5,6 +5,12 @@ all: run
 bash: up
 	docker-compose exec app bash
 
+webapi: up
+	docker-compose exec app uvicorn --host=0.0.0.0 --app-dir=src/app webapi:app
+
+hello:
+	@sh bin/request_hello.sh
+
 # switch mode
 gpu:
 	@rm -f Dockerfile docker-compose.yml
@@ -13,12 +19,6 @@ gpu:
 cpu:
 	@rm -f Dockerfile docker-compose.yml
 	@ln -s docker/docker-compose.cpu.yml docker-compose.yml
-
-kedro: up
-	docker-compose exec app kedro new --config kedro.yml
-
-kedro-viz: up
-	docker-compose exec --workdir=/home/dsuser/workspace/kedro app kedro viz --host=0.0.0.0
 
 # run tasks
 mlflow-run: up
@@ -31,6 +31,11 @@ debug: up
 mlflow-ui: up
 	docker-compose exec app mlflow ui --host=0.0.0.0
 
+mlflow-server: up
+    docker-compose exec app mlflow server --host=0.0.0.0 \
+		--backend-store-uri sqlite:///result/mlflow.db \
+		--default-artifact-root=mlruns
+
 tensorboard: up
 	$(eval logdir:=$(shell ls -trd result/* | tail -n 1))
 	echo $(logdir)
@@ -38,7 +43,7 @@ tensorboard: up
 
 # for docker-compose
 up:
-	docker-compose up -d
+	docker-compose up -d app
 
 active:
 	docker-compose up

@@ -13,8 +13,6 @@ plotly
 mlflow
 tensorboard
 tensorboardX
-kedro
-kedro-viz
 python-dateutil==2.8.0
 
 
@@ -37,6 +35,8 @@ notebook
 python-dotenv
 
 # for ds project
+fastapi
+uvicorn
 torch
 torchvision
 torchtext
