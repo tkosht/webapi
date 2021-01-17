@@ -9,10 +9,17 @@ python: up
 	docker-compose exec app python
 
 webapi: up
-	docker-compose exec app uvicorn --host=0.0.0.0 --app-dir=src/app webapi:app
+	docker-compose exec app uvicorn \
+        --host=0.0.0.0 \
+        --access-log \
+        --app-dir=src/app \
+        webapi:app
 
 hello:
 	@sh bin/request_hello.sh
+
+post:
+	@docker-compose exec app sh bin/request_post.sh
 
 # switch mode
 gpu:
