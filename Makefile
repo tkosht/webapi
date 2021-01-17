@@ -5,6 +5,9 @@ all: run
 bash: up
 	docker-compose exec app bash
 
+python: up
+	docker-compose exec app python
+
 webapi: up
 	docker-compose exec app uvicorn --host=0.0.0.0 --app-dir=src/app webapi:app
 
