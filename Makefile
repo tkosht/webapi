@@ -11,7 +11,7 @@ python: up
 webapi: up
 	docker-compose exec app uvicorn \
         --host=0.0.0.0 \
-        --access-log \
+        --log-config=conf/logging.ini \
         --app-dir=src/app \
         webapi:app
 
@@ -68,6 +68,11 @@ build:
 
 reup: down up
 
-clean:
+clean: clean-logs clean-container
+
+clean-logs:
+	rm -rf log/*.log
+
+clean-container:
 	docker-compose down --rmi all
 	sudo rm -rf app/__pycache__
