@@ -8,6 +8,9 @@ bash: up
 python: up
 	docker-compose exec app python
 
+vue: up
+	docker-compose exec app sh bin/vue.sh
+
 webapi: up
 	docker-compose exec app uvicorn \
         --host=0.0.0.0 \

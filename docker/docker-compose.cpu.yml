@@ -21,3 +21,4 @@ services:
       - "5000:5000"   # MLflow
       - "6006:6006"   # tensorboard
       - "8000:8000"   # webapi
+      - "8080:8080"   # vue
