@@ -24,6 +24,9 @@ hello:
 post:
 	@docker-compose exec app sh bin/request_post.sh
 
+test-requests:
+	@docker-compose exec app sh bin/test_request.sh
+
 # switch mode
 gpu:
 	@rm -f Dockerfile docker-compose.yml
