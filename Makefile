@@ -8,8 +8,14 @@ bash: up
 python: up
 	docker-compose exec app python
 
-vue: up
+vue-install: up
 	docker-compose exec app sh bin/vue.sh
+
+vue-build: up
+	docker-compose exec app sh bin/build_vue.sh
+
+vue-dev: up
+	docker-compose exec app sh bin/build_vue.sh dev
 
 webapi: up
 	docker-compose exec app uvicorn \
