@@ -4,7 +4,8 @@
 		"../docker-compose.yml"
 	],
 	"service": "app",
-	"workspaceFolder": "/home/dsuser/workspace",
+	// "workspaceFolder": "/home/dsuser/workspace",
+	"workspaceFolder": "/home/dsuser/workspace/frontend",
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
 		"python.pythonPath": "/usr/bin/python",
@@ -29,6 +30,7 @@
 		"tushortz.python-extended-snippets",
 		"littlefoxteam.vscode-python",
 		"octref.vetur",
+		"msjsdiag.debugger-for-chrome",
 		"donjayamanne.githistory",
 		"hediet.vscode-drawio",
 		"tabnine.tabnine-vscode",

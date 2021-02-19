@@ -12,11 +12,13 @@ app.mount(
 
 @app.get("/hello")
 def hello():
+    print({"Hello": "World!!!"})
     return {"Hello": "World!!!"}
 
 
 @app.post("/post")
 def echo(type: str, name: str = Query(None), body: dict = Body(None)):
+    print({"type": type, "name": name, "body": body})
     return {"type": type, "name": name, "body": body}
 
 
