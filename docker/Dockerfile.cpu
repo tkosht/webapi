@@ -15,6 +15,18 @@ RUN mkdir /var/run/sshd
 RUN echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
 RUN echo "AuthorizedKeysFile workspace/.ssh/authorized_keys" >> /etc/ssh/sshd_config
 
+RUN npm update -g npm \
+    && npm install -g webpack-dev-server \
+    && npm install -g @vue/cli || true      # ignore error exitted
+
+# retry to install @vue/cli
+RUN npm install -g @vue/cli || true
+RUN npm install -g @vue/cli-init || true 
+RUN npm install -g vue || true 
+RUN npm install -g vue-router
+RUN npm install -g bootstrap-vue || true
+RUN npm install -g bootstrap
+RUN npm install -g vue-axios axios
 
 RUN apt-get install -y --no-install-recommends \
         python3-dev \

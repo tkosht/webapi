@@ -3,7 +3,6 @@
 d=$(cd $(dirname $0) && pwd)
 cd $d/../
 
-cat /dev/null > package.json
 sudo npm update -g npm
 sudo npm install -g webpack-dev-server
 sudo npm install -g @vue/cli
