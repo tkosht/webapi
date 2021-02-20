@@ -28,7 +28,7 @@ export default {
   name: 'FileInput',
   mixins: [FileEvaluable],
 
-  data() {
+  data () {
     return {
       file: {},
       error: '',
@@ -40,7 +40,7 @@ export default {
     isError: function () {
       return !!this.error !== ''
     },
-    classesDragArea() {
+    classesDragArea () {
       return {
         drag_on: this.inArea
       }
@@ -48,11 +48,11 @@ export default {
   },
 
   methods: {
-    dropFile(e) {
+    dropFile (e) {
       this.changeFile(e)
       this.offArea()
     },
-    changeFile(e) {
+    changeFile (e) {
       const files = e.target.files || e.dataTransfer.files
 
       if (this.validation(files[0])) {
@@ -61,14 +61,14 @@ export default {
         this.file = {}
       }
     },
-    resetFile() {
+    resetFile () {
       const input = this.$refs.file
       input.type = 'text'
       input.type = 'file'
       this.file = {}
       this.error = ''
     },
-    validation(file) {
+    validation (file) {
       if (!this.isAllowFileType(file.type)) {
         this.error = this.getErrorMessageType()
         return false
@@ -82,10 +82,10 @@ export default {
       this.error = ''
       return true
     },
-    onArea() {
+    onArea () {
       this.inArea = true
     },
-    offArea() {
+    offArea () {
       this.inArea = false
     }
   }
