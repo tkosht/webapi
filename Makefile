@@ -11,6 +11,9 @@ python: up
 vue-install: up
 	docker-compose exec app sh bin/install_vue.sh
 
+vue-init: up
+	docker-compose exec app sh bin/init_frontend.sh
+
 vue-restore: up
 	docker-compose exec app sh bin/build_vue.sh ci
 
