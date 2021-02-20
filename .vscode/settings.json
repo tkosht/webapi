@@ -29,4 +29,7 @@
   ],
   // Prettier の ESLint 連携
   "prettier.eslintIntegration": true,
+  "eslint.workingDirectories": [
+    "./"
+  ],
 }
