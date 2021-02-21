@@ -14,7 +14,9 @@ vue-install: up
 vue-init: up
 	docker-compose exec app sh bin/init_frontend.sh
 
-vue-restore: up
+vue-restore: vue-ci
+
+vue-ci: up
 	docker-compose exec app sh bin/build_vue.sh ci
 
 vue-build: up

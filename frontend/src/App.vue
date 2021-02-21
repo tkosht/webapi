@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png"><br>
+    <img src="./assets/logo.png" /><br />
     <!--
     <router-link to="/">トップページ</router-link>
     <router-link to="/upload">アップロードページ</router-link>
@@ -8,7 +8,7 @@
     -->
     <form id="upload_form">
       <file-input :params="{limit: 2, unit: 'gb', allow: 'csv'}" />
-        <button type="submit" @click="do_upload">アップロード</button>
+      <button type="submit" @click="do_upload">アップロード</button>
     </form>
   </div>
 </template>
@@ -29,14 +29,19 @@ export default {
   },
   methods: {
     do_upload: function () {
+      // eslint-disable-next-line no-console
       console.log('do_upload')
-      axios.post('/post?type=type_dummy', {
-        body: {hello: 'こんにちは世界'}
-      })
-        .then(response => {
+      axios
+        .post('/post?type=type_dummy', {
+          body: {hello: 'こんにちは世界'}
+        })
+        .then((response) => {
+          // eslint-disable-next-line no-console
           console.log('response: ', response.data.data)
           alert('response: ' + JSON.stringify(response.data.data))
-        }).catch(error => {
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
           console.log('error:' + error)
           alert('error: ' + error)
         })
@@ -47,7 +52,7 @@ export default {
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

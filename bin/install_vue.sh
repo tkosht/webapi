@@ -1,23 +1,11 @@
 #!/bin/sh
 
 d=$(cd $(dirname $0) && pwd)
-cd $d/../
+cd $d/../frontend
 
-sudo npm update -g npm
-sudo npm install -g webpack-dev-server
-sudo npm install -g @vue/cli
-if [ ! -f /usr/local/bin/vue ]; then
-    # retry
-    sudo npm install -g @vue/cli
-fi
-sudo npm install -g @vue/cli-init
-sudo npm install -g vue vue-router bootstrap-vue bootstrap
-sudo npm install -g vue-axios axios
+npm install -save vue vue-router bootstrap-vue bootstrap
+npm install --save axios vue-axios
 
-
-pj_name="frontend"
-rm -rf $pj_name
-vue init webpack $pj_name
-cd $pj_name
-
-HOST=0.0.0.0 npm run dev
+npm install --save-dev prettier
+npm install --save-dev eslint-plugin-prettier
+npm install --save-dev @vue/eslint-config-prettier

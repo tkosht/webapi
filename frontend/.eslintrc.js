@@ -13,7 +13,6 @@ module.exports = {
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     'plugin:vue/essential',
     "eslint:recommended",
-    "@vue/prettier",
     // https://github.com/standard/standard/blob/master/docs/RULES-en.md
     'standard'
   ],
