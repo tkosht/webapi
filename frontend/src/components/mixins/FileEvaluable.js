@@ -19,7 +19,8 @@ export const FileEvaluable = {
         },
         'unit': {
           'kb': 1000,
-          'mb': 1000000
+          'mb': 1000000,
+          'gb': 1000000000
         }
       }
     }
