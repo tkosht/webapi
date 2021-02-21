@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-MAINTAINER tkosht <takehito.oshita.business@gmail.com>
+LABEL maintainer="tkosht <takehito.oshita.business@gmail.com>"
 
 ENV TZ Asia/Tokyo
 ENV DEBIAN_FRONTEND=noninteractive
@@ -22,11 +22,6 @@ RUN npm update -g npm \
 # retry to install @vue/cli
 RUN npm install -g @vue/cli || true
 RUN npm install -g @vue/cli-init || true 
-RUN npm install -g vue || true 
-RUN npm install -g vue-router
-RUN npm install -g bootstrap-vue || true
-RUN npm install -g bootstrap
-RUN npm install -g vue-axios axios
 
 RUN apt-get install -y --no-install-recommends \
         python3-dev \
