@@ -8,16 +8,16 @@
       @dragleave.prevent="offArea"
       @dragend.prevent="offArea"
     >
+      <p>
+        <span id="file_name" v-show="file.name"
+          >{{ file.name }} <span class="reset_file_ico" @click="resetFile">×</span></span
+        >
+      </p>
       <label
         >ファイルを選択
         <input @change="changeFile" ref="file" type="file" />
       </label>
     </div>
-    <p>
-      <span id="file_name" v-show="file.name"
-        >{{ file.name }} <span class="reset_file_ico" @click="resetFile">×</span></span
-      >
-    </p>
     <p id="error" v-show="error">{{ error }}</p>
   </div>
 </template>

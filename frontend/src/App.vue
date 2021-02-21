@@ -7,9 +7,14 @@
     <router-view/>
     -->
     <form id="upload_form">
-      <file-input :params="{limit: 2, unit: 'gb', allow: 'csv'}" />
-      <button type="submit" @click="do_upload">アップロード</button>
+      <center>
+        <file-input :params="{limit: 2, unit: 'gb', allow: 'csv'}" />
+      </center>
+      <br />
+      <button type="submit" @click="do_upload('/post?type=type_dummy')">アップロード</button>
     </form>
+    <br />
+    <textarea id="txtArea" ref="txtArea" v-model="response_txt" placeholder="レスポンス"></textarea>
   </div>
 </template>
 
@@ -24,26 +29,38 @@ Vue.use(VueAxios, axios)
 
 export default {
   name: 'App',
+  data: function () {
+    return {
+      response_txt: ''
+    }
+  },
   components: {
     FileInput
   },
   methods: {
-    do_upload: function () {
+    do_upload: function (url) {
+      var dataBody = {hello: 'こんにちは��'}
+
       // eslint-disable-next-line no-console
-      console.log('do_upload')
+      console.log('post: ', dataBody)
+
       axios
-        .post('/post?type=type_dummy', {
-          body: {hello: 'こんにちは世界'}
+        .post(url, {
+          body: dataBody
         })
         .then((response) => {
           // eslint-disable-next-line no-console
-          console.log('response: ', response.data.data)
-          alert('response: ' + JSON.stringify(response.data.data))
+          console.log('response: ', response.data)
+          alert(`response: ${JSON.stringify(response.data)}`)
+          // this.$refs.txtArea.value = JSON.stringify(response.data)
+          this.response_txt = JSON.stringify(response.data)
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
           console.log('error:' + error)
-          alert('error: ' + error)
+          alert(`error: ${error}`)
+          // this.$refs.txtArea.value = JSON.stringify(error)
+          this.response_txt = JSON.stringify(JSON.stringify(error))
         })
     }
   }
@@ -58,5 +75,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#txtArea {
+  resize: vertical;
+  width:300px;
+  height:200px;
 }
 </style>
