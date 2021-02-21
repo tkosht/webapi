@@ -4,8 +4,8 @@
 		"../docker-compose.yml"
 	],
 	"service": "app",
-	// "workspaceFolder": "/home/dsuser/workspace",
-	"workspaceFolder": "/home/dsuser/workspace/frontend",
+	"workspaceFolder": "/home/dsuser/workspace",
+	// "workspaceFolder": "/home/dsuser/workspace/frontend",
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
 		"python.pythonPath": "/usr/bin/python",
