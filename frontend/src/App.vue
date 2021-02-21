@@ -30,13 +30,15 @@ export default {
   methods: {
     do_upload: function () {
       console.log('do_upload')
-      axios.post('/post', {
-        data: {hello: 'こんにちは世界'}
+      axios.post('/post?type=type_dummy', {
+        body: {hello: 'こんにちは世界'}
       })
         .then(response => {
-          console.log('response: ' + JSON.stringify(response.data.data))
+          console.log('response: ', response.data.data)
+          alert('response: ' + JSON.stringify(response.data.data))
         }).catch(error => {
           console.log('error:' + error)
+          alert('error: ' + error)
         })
     }
   }
