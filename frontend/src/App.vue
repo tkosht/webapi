@@ -23,8 +23,10 @@
           ></b-form-textarea>
 
           <p />
-          <b-table sticky-header :items="sampleItems" head-variant="dark"></b-table>
           <button class="btn btn-dark" type="submit" @click="doUpload('/upload')" >Upload</button>
+
+          <p />
+          <b-table sticky-header :items="sampleItems" head-variant="dark"></b-table>
         </form>
       </div>
     </div>
