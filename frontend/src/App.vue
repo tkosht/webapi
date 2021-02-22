@@ -1,24 +1,6 @@
 <template>
   <div id="app" class="container">
     <img src="./assets/logo.png" /><br />
-    <!--
-    <router-link to="/">トップページ</router-link>
-    <router-link to="/upload">アップロードページ</router-link>
-    <router-view/>
-
-      <button type="submit" @click="doUpload('/post?type=type_dummy')">アップロード</button>
-    -->
-    <!--
-    <form id="upload_form">
-      <center>
-        <file-input :params="{limit: 2, unit: 'gb', allow: 'csv'}" />
-      </center>
-    </form>
-    <br />
-    <textarea id="txtArea" ref="txtArea" v-model="statusText" placeholder="レスポンス"></textarea>
-
-    <div class="mt-3">Selected file: {{ file2Upload ? file2Upload.name : '' }}</div>
-    -->
     <div class="row" v-if="!uploading">
       <div class="col-12 text-center">
         <form id="upload_form">
@@ -30,11 +12,6 @@
             @input="loadSamples(file2Upload)"
           ></b-form-file>
 
-          <!--
-          <p />
-          <button class="btn btn-dark" type="button" @click="loadSamples(file2Upload)" >View</button>
-          -->
-
           <p />
           <b-form-textarea
             id="textArea"
@@ -45,11 +22,8 @@
             disabled
           ></b-form-textarea>
 
-          <!--
-          <b-table striped hover :items="sampleItems"></b-table>
-          -->
           <p />
-          <b-table striped hover sticky-header :items="sampleItems" head-variant="dark"></b-table>
+          <b-table sticky-header :items="sampleItems" head-variant="dark"></b-table>
           <button class="btn btn-dark" type="submit" @click="doUpload('/upload')" >Upload</button>
         </form>
       </div>
@@ -81,17 +55,9 @@ export default {
   name: 'App',
   data: function () {
     return {
-      // file2Upload: new File(['sample,csv,data'], 'sample.txt'),
       file2Upload: null,
       uploading: false,
-      sampleItems: [
-        /*
-        { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-        { age: 38, first_name: 'Jami', last_name: 'Carney' }
-        */
-      ],
+      sampleItems: [],
       dataItems: [],
       statusText: ''
     }
@@ -107,7 +73,6 @@ export default {
         return {}
       }
 
-      // const dataBody = {hello: 'こんにちは♪', data: this.file2Upload}
       let formData = new FormData()
       formData.append('file', this.file2Upload)
 
@@ -129,15 +94,12 @@ export default {
         ).then((response) => {
           // eslint-disable-next-line no-console
           console.log('response: ', response.data)
-          // alert(`response: ${JSON.stringify(response.data)}`)
-          // this.$refs.txtArea.value = JSON.stringify(response.data)
           this.statusText = JSON.stringify(response.data)
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
           console.log('error:' + error)
           alert(`error: ${error.message}`)
-          // this.$refs.txtArea.value = JSON.stringify(error)
           this.statusText = error.message
         })
         .then(() => {
