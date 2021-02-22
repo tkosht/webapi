@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, Body
+from fastapi import FastAPI, Query, Body, File, UploadFile
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 
@@ -20,6 +20,12 @@ def hello():
 def echo(type: str, name: str = Query(None), body: dict = Body(None)):
     print({"type": type, "name": name, "body": body})
     return {"type": type, "name": name, "body": body}
+
+
+@app.post("/upload")
+def upload(file: UploadFile = File(...)):
+    print("uploaded:", file.filename)
+    return {"code": 0, "message": "success", "description": f"uploaded {file.filename}"}
 
 
 @app.get("/")

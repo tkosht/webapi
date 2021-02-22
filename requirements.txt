@@ -41,6 +41,7 @@ python-dotenv
 # for project
 fastapi
 aiofiles
+python-multipart
 uvicorn
 torch
 torchvision

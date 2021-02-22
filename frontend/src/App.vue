@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <img src="./assets/logo.png" /><br />
     <!--
     <router-link to="/">トップページ</router-link>
@@ -19,33 +19,48 @@
 
     <div class="mt-3">Selected file: {{ file2Upload ? file2Upload.name : '' }}</div>
     -->
-    <form id="upload_form">
-      <b-form-file
-        v-model="file2Upload"
-        :state="Boolean(file2Upload)"
-        placeholder="Choose a file or drop it here..."
-        drop-placeholder="Drop file here..."
-      ></b-form-file>
-      <br />
+    <div class="row" v-if="!uploading">
+      <div class="col-12 text-center">
+        <form id="upload_form">
+          <b-form-file
+            v-model="file2Upload"
+            :state="Boolean(file2Upload)"
+            placeholder="Choose a file or drop it here..."
+            drop-placeholder="Drop file here..."
+            @input="loadSamples(file2Upload)"
+          ></b-form-file>
 
-      <button class="btn btn-primary" type="submit" @click="doUpload('/post?type=type_dummy')" >Upload</button>
-      <button class="btn btn-primary" type="button" @click="loadSamples(file2Upload)" >View</button>
+          <!--
+          <p />
+          <button class="btn btn-dark" type="button" @click="loadSamples(file2Upload)" >View</button>
+          -->
 
-      <br />
-      <b-form-textarea
-        id="textArea"
-        v-model="statusText"
-        placeholder="Status"
-        rows="1"
-        max-rows="3"
-        disabled
-      ></b-form-textarea>
+          <p />
+          <b-form-textarea
+            id="textArea"
+            v-model="statusText"
+            placeholder="Status"
+            rows="1"
+            max-rows="3"
+            disabled
+          ></b-form-textarea>
 
-      <!--
-      <b-table striped hover :items="sampleItems"></b-table>
-      -->
-      <b-table striped hover sticky-header :items="sampleItems" head-variant="dark"></b-table>
-    </form>
+          <!--
+          <b-table striped hover :items="sampleItems"></b-table>
+          -->
+          <p />
+          <b-table striped hover sticky-header :items="sampleItems" head-variant="dark"></b-table>
+          <button class="btn btn-dark" type="submit" @click="doUpload('/upload')" >Upload</button>
+        </form>
+      </div>
+    </div>
+    <div class="row" v-else>
+      <div class="col-12 text-center">
+          <progress ref="progress" max="100" :value.prop="uploadPercentage"></progress>
+          <br>
+          <span class="text-muted">Now Uploading...</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,7 +81,9 @@ export default {
   name: 'App',
   data: function () {
     return {
-      file2Upload: new File(['sample,csv,data'], 'sample.txt'),
+      // file2Upload: new File(['sample,csv,data'], 'sample.txt'),
+      file2Upload: null,
+      uploading: false,
       sampleItems: [
         /*
         { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
@@ -84,19 +101,35 @@ export default {
   },
   methods: {
     doUpload: function (url) {
-      const dataBody = {hello: 'こんにちは♪'}
+      this.dataItems = []
+      if (!this.file2Upload) {
+        this.statusText = 'ファイルを選択してください✨'
+        return {}
+      }
+
+      // const dataBody = {hello: 'こんにちは♪', data: this.file2Upload}
+      let formData = new FormData()
+      formData.append('file', this.file2Upload)
 
       // eslint-disable-next-line no-console
-      console.log('post: ', dataBody)
+      console.log('formData: ', formData)
+
+      this.uploading = true
 
       axios
-        .post(url, {
-          body: dataBody
-        })
-        .then((response) => {
+        .post(url, formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+            onUploadProgress: function (progressEvent) {
+              this.progress = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100))
+            }.bind(this)
+          }
+        ).then((response) => {
           // eslint-disable-next-line no-console
           console.log('response: ', response.data)
-          alert(`response: ${JSON.stringify(response.data)}`)
+          // alert(`response: ${JSON.stringify(response.data)}`)
           // this.$refs.txtArea.value = JSON.stringify(response.data)
           this.statusText = JSON.stringify(response.data)
         })
@@ -107,12 +140,17 @@ export default {
           // this.$refs.txtArea.value = JSON.stringify(error)
           this.statusText = error.message
         })
+        .then(() => {
+          this.$refs.progress.value = 0
+          this.uploading = false
+          this.sampleItems = []
+          this.file2Upload = null
+        })
     },
     loadSamples: function (csvFile) {
-      this.loadCsv(csvFile, 20)
+      this.loadCsv(csvFile, 5)
     },
-    csvLoader: function (reader, n = -1) {
-      // const n = 50
+    _load: function (reader, n = -1) {
       let strLines = reader.result.split('\n')
       if (n > 0) {
         strLines = strLines.slice(0, n)
@@ -148,11 +186,13 @@ export default {
 
       reader.onload = () => {
         this.statusText = 'Loading ...'
-        let arrayLines = this.csvLoader(reader, n)
+        let arrayLines = this._load(reader, n)
 
         if (n > 0) {
           vm.sampleItems = arrayLines
+          vm.dataItems = []
         } else {
+          vm.sampleItems = []
           vm.dataItems = arrayLines
         }
         this.statusText = 'Loaded samples in heads of files'
