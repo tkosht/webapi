@@ -11,23 +11,38 @@ app.mount(
 
 
 @app.get("/hello")
-def hello():
+async def hello():
     print({"Hello": "World!!!"})
     return {"Hello": "World!!!"}
 
 
 @app.post("/post")
-def echo(type: str, name: str = Query(None), body: dict = Body(None)):
+async def echo(type: str, name: str = Query(None), body: dict = Body(None)):
     print({"type": type, "name": name, "body": body})
     return {"type": type, "name": name, "body": body}
 
 
 @app.post("/upload")
-def upload(file: UploadFile = File(...)):
-    print("uploaded:", file.filename)
-    return {"code": 0, "message": "success", "description": f"uploaded {file.filename}"}
+async def upload(file: UploadFile = File(...)):
+    code = 0
+    message = "success"
+    try:
+        print("uploaded:", file.filename)
+        contents = await file.read()
+        print("contents:", contents.decode('utf-8')[:100])
+    except Exception as e:
+        print("Exception:", e)
+        code = 1
+        message = str(e)
+    finally:
+        return {"code": code, "message": message, "description": f"upload file '{file.filename}'"}
 
 
 @app.get("/")
 async def redirect_index_html():
     return RedirectResponse("front/index.html")
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

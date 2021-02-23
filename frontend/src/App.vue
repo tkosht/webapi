@@ -57,7 +57,7 @@ export default {
   name: 'App',
   data: function () {
     return {
-      file2Upload: null,
+      file2Upload: {},
       uploading: false,
       sampleItems: [],
       dataItems: [],
@@ -108,7 +108,7 @@ export default {
           this.$refs.progress.value = 0
           this.uploading = false
           this.sampleItems = []
-          this.file2Upload = null
+          this.file2Upload = {}
         })
     },
     loadSamples: function (csvFile) {
