@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Query, Body, File, UploadFile
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
+import pandas
+from io import BytesIO
 
 
 app = FastAPI()
@@ -25,22 +27,25 @@ async def echo(type: str, name: str = Query(None), body: dict = Body(None)):
 @app.post("/upload")
 async def upload(file: UploadFile = File(...)):
     code = 0
-    message = "success"
+    messages = ["success", "error"]
+    detail = f"to upload file '{file.filename}'"
     try:
         print("uploaded:", file.filename)
         contents = await file.read()
         print("contents:", contents.decode('utf-8')[:100])
+        df = pandas.read_csv(BytesIO(contents), encoding="utf-8")
+        print("df:", df.columns)
     except Exception as e:
         print("Exception:", e)
         code = 1
-        message = str(e)
+        detail = str(e)
     finally:
-        return {"code": code, "message": message, "description": f"upload file '{file.filename}'"}
+        return {"code": code, "message": messages[code], "detail": detail}
 
 
 @app.get("/")
 async def redirect_index_html():
-    return RedirectResponse("front/index.html")
+    return RedirectResponse("frontend/index.html")
 
 
 if __name__ == "__main__":

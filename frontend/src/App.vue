@@ -16,7 +16,7 @@
           <b-form-textarea
             id="textArea"
             v-model="statusText"
-            placeholder="Status"
+            placeholder="ここには処理結果の状態が表示されます"
             rows="1"
             max-rows="3"
             disabled
@@ -32,7 +32,7 @@
     </div>
     <div class="row" v-else>
       <div class="col-12 text-center">
-          <progress ref="progress" max="100" :value.prop="uploadPercentage"></progress>
+          <b-progress ref="progress" :max="100" :value="progress" show-progress animated></b-progress>
           <br>
           <span class="text-muted">Now Uploading...</span>
       </div>
@@ -57,7 +57,7 @@ export default {
   name: 'App',
   data: function () {
     return {
-      file2Upload: {},
+      file2Upload: null,
       uploading: false,
       sampleItems: [],
       dataItems: [],
@@ -70,7 +70,7 @@ export default {
   methods: {
     doUpload: function (url) {
       this.dataItems = []
-      if (!this.file2Upload) {
+      if (!this.file2Upload || !this.file2Upload.name) {
         this.statusText = 'ファイルを選択してください✨'
         return {}
       }
@@ -96,19 +96,26 @@ export default {
         ).then((response) => {
           // eslint-disable-next-line no-console
           console.log('response: ', response.data)
-          this.statusText = JSON.stringify(response.data)
+          // this.statusText = JSON.stringify(response.data)
+          this.statusText = `${response.data.message}: ${response.data.detail}`
+          // eslint-disable-next-line no-console
+          console.log('response code: ', response.data.code)
+          this.file2Upload = []
+          if (response.data.code !== 0) {
+            this.file2Upload = null
+          }
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
           console.log('error:' + error)
           alert(`error: ${error.message}`)
           this.statusText = error.message
+          this.file2Upload = null
         })
         .then(() => {
           this.$refs.progress.value = 0
           this.uploading = false
           this.sampleItems = []
-          this.file2Upload = {}
         })
     },
     loadSamples: function (csvFile) {
