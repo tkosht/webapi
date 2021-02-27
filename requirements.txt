@@ -50,3 +50,4 @@ pytorch-forecasting
 fastparquet
 python-snappy
 pyro-ppl
+fbprophet
