@@ -7,8 +7,8 @@
           <b-form-file
             v-model="file2Upload"
             :state="Boolean(file2Upload)"
-            placeholder="Choose a file or drop it here..."
-            drop-placeholder="Drop file here..."
+            placeholder="ファイルを選択するか、ここにドラッグ＆ドロップしてください ..."
+            drop-placeholder="ここにファイルをドロップしてください ..."
             @input="loadSamples(file2Upload)"
           ></b-form-file>
 
@@ -34,7 +34,7 @@
       <div class="col-12 text-center">
           <b-progress ref="progress" :max="100" :value="progress" show-progress animated></b-progress>
           <br>
-          <span class="text-muted">Now Uploading...</span>
+          <span class="text-muted">処理中です ...</span>
       </div>
     </div>
   </div>
