@@ -24,7 +24,7 @@ def _search_root(cfg, root_key: str):
     return cfg
 
 
-def add_args(params_file: str, root_key: str = None, as_default: bool = False) -> callable:
+def add_args(params_file: str, root_key: str = "", as_default: bool = False) -> callable:
     @functools.wraps(add_args)
     def _decorator(f: callable) -> callable:
         @functools.wraps(f)
