@@ -1,14 +1,1 @@
-model:
-  init:
-    mcmc_samples: 300
-    holidays_prior_scale: 0.25
-    changepoint_prior_scale: 0.01
-    seasonality_mode: "multiplicative"  # additive|multiplicative
-    yearly_seasonality: 10
-    weekly_seasonality: True
-    daily_seasonality: False
-  fit:
-    thin: 2     # default 1
-    # warmup: 1000  # <mcmc_sampels, default mcmc_sampels//2
-    chains: 5   # default 4
-    seed: 777
+prophet.yml.basian

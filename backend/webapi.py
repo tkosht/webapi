@@ -28,8 +28,8 @@ async def echo(type: str, name: str = Query(None), body: dict = Body(None)):
 @app.post("/upload")
 async def upload(file: UploadFile = File(...)):
     code = 0
-    messages = ["success", "error"]
-    detail = f"to upload file '{file.filename}'"
+    statuses = ["success", "error"]
+    detail = f"to upload the file '{file.filename}'"
     columns = []
     data = []
     try:
@@ -52,7 +52,7 @@ async def upload(file: UploadFile = File(...)):
     finally:
         return {
             "code": code,
-            "message": messages[code],
+            "status": statuses[code],
             "detail": detail,
             "columns": columns,
             "data": data,

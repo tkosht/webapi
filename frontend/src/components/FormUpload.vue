@@ -94,7 +94,7 @@ export default {
           // eslint-disable-next-line no-console
           console.log('response: ', response.data)
           // this.statusText = JSON.stringify(response.data)
-          this.statusText = `${response.data.message}: ${response.data.detail}`
+          this.statusText = `${response.data.status}: ${response.data.detail}`
           // eslint-disable-next-line no-console
           console.log('response code: ', response.data.code)
           this.file2Upload = []

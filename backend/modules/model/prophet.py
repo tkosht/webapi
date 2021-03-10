@@ -35,8 +35,8 @@ class EstimatorProphet(Estimator):
     )
     def _create_prophet_model(
         holidays_df,
-        mcmc_samples=250,
         holidays_prior_scale=0.25,
+        mcmc_samples=250,
         changepoint_prior_scale=0.01,
         seasonality_mode="multiplicative",
         yearly_seasonality=10,
@@ -44,9 +44,9 @@ class EstimatorProphet(Estimator):
         daily_seasonality=False,
     ) -> Prophet:
         return Prophet(
-            mcmc_samples=mcmc_samples,
             holidays=holidays_df,
             holidays_prior_scale=holidays_prior_scale,
+            mcmc_samples=mcmc_samples,
             changepoint_prior_scale=changepoint_prior_scale,
             seasonality_mode=seasonality_mode,
             yearly_seasonality=yearly_seasonality,
