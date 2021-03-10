@@ -2,6 +2,7 @@ import pandas
 import datetime
 from fbprophet import Prophet
 from .base import Transer, Estimator
+from ..util.params import add_args
 
 
 class PreprocessProphet(Transer):
@@ -16,10 +17,10 @@ class PreprocessProphet(Transer):
 
 
 class EstimatorProphet(Estimator):
-    def __init__(self, holidays_df: pandas.DataFrame, exogs=[], model: Prophet = None):
+    def __init__(self, holidays_df: pandas.DataFrame = None, exogs=[], model: Prophet = None):
         self.model = model
         if model is None:
-            self.model = self.create_prophet_model(holidays_df)
+            self.model = self._create_prophet_model(holidays_df)
         self.exogs = exogs
         for _exg in exogs:
             self.model.add_regressor(_exg, prior_scale=0.5, mode="multiplicative")
@@ -27,18 +28,28 @@ class EstimatorProphet(Estimator):
         self.trained_date = None
 
     @staticmethod
-    def create_prophet_model(holidays_df) -> Prophet:
+    @add_args(params_file="conf/prophet.yml", root_key="/model/init", as_default=False)
+    def _create_prophet_model(holidays_df,
+                              mcmc_samples=250,
+                              holidays_prior_scale=0.25,
+                              changepoint_prior_scale=0.01,
+                              seasonality_mode="multiplicative",
+                              yearly_seasonality=10,
+                              weekly_seasonality=True,
+                              daily_seasonality=False,
+                              ) -> Prophet:
         return Prophet(
-            mcmc_samples=300,
+            mcmc_samples=mcmc_samples,
             holidays=holidays_df,
-            holidays_prior_scale=0.25,
-            changepoint_prior_scale=0.01,
-            seasonality_mode="multiplicative",
-            yearly_seasonality=10,
-            weekly_seasonality=True,
-            daily_seasonality=False,
+            holidays_prior_scale=holidays_prior_scale,
+            changepoint_prior_scale=changepoint_prior_scale,
+            seasonality_mode=seasonality_mode,
+            yearly_seasonality=yearly_seasonality,
+            weekly_seasonality=weekly_seasonality,
+            daily_seasonality=daily_seasonality,
         )
 
+    @add_args(params_file="conf/prophet.yml", root_key="/model/fit", as_default=False)
     def fit(self, X: pandas.DataFrame, y: pandas.DataFrame, **params):
         assert "ds" in X.columns  # date series
         assert "y" in X.columns  # actual values
@@ -59,6 +70,9 @@ class EstimatorProphet(Estimator):
         return self
 
     def predict(self, predict_df, **params) -> pandas.DataFrame:
+        """
+        predict after trained_date by 1 year later
+        """
         predict_by = self.trained_date + datetime.timedelta(days=365)
         if "predict_by" in params:
             predict_by = params["predict_by"]
@@ -80,7 +94,8 @@ class EstimatorProphet(Estimator):
     def make_futures(
         self, predict_df: pandas.DataFrame, predict_by: str = "2020-12-31", freq="D"
     ):
-        predict_by = datetime.datetime.strptime(predict_by, "%Y-%m-%d")
+        if isinstance(predict_by, str):
+            predict_by = datetime.datetime.strptime(predict_by, "%Y-%m-%d")
         predict_df = predict_df.copy()
         predict_date = self.trained_date + datetime.timedelta(1)
         future_date = (

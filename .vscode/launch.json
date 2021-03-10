@@ -8,7 +8,8 @@
             "name": "webapi: fastapi",
             "type": "python",
             "request": "launch",
-            "module": "src.app.webapi"
+            "module": "src.app.webapi",
+            "justMyCode": false
         },
         {
             "name": "Python: Current File",

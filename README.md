@@ -15,33 +15,33 @@ make
 ### create project
 
 ```
-make vue-init
+make frontend-init
 ```
 
 ### install libraries for project
 
 ```
-make vue-install
+make frontend-install
 ```
 
 ### restore vue ci environment
 
-you should use this task after `git clone` repository
+you should use this task after `git clone` this repository
 
 ```
-make vue-ci
+make frontend-ci
 ```
 
 # use
 
-# dev environment
+## dev environment
 
 ```
-make vue-dev
+make frontend-dev
 ```
 
-# prod environment
+## prod environment
 
 ```
-make vue-build
+make frontend-build
 ```
