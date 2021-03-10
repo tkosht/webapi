@@ -17,7 +17,9 @@ class PreprocessProphet(Transer):
 
 
 class EstimatorProphet(Estimator):
-    def __init__(self, holidays_df: pandas.DataFrame = None, exogs=[], model: Prophet = None):
+    def __init__(
+        self, holidays_df: pandas.DataFrame = None, exogs=[], model: Prophet = None
+    ):
         self.model = model
         if model is None:
             self.model = self._create_prophet_model(holidays_df)
@@ -28,16 +30,19 @@ class EstimatorProphet(Estimator):
         self.trained_date = None
 
     @staticmethod
-    @add_args(params_file="conf/prophet.yml", root_key="/model/init", as_default=False)
-    def _create_prophet_model(holidays_df,
-                              mcmc_samples=250,
-                              holidays_prior_scale=0.25,
-                              changepoint_prior_scale=0.01,
-                              seasonality_mode="multiplicative",
-                              yearly_seasonality=10,
-                              weekly_seasonality=True,
-                              daily_seasonality=False,
-                              ) -> Prophet:
+    @add_args(
+        params_file="backend/conf/prophet.yml", root_key="/model/init", as_default=False
+    )
+    def _create_prophet_model(
+        holidays_df,
+        mcmc_samples=250,
+        holidays_prior_scale=0.25,
+        changepoint_prior_scale=0.01,
+        seasonality_mode="multiplicative",
+        yearly_seasonality=10,
+        weekly_seasonality=True,
+        daily_seasonality=False,
+    ) -> Prophet:
         return Prophet(
             mcmc_samples=mcmc_samples,
             holidays=holidays_df,
@@ -49,7 +54,9 @@ class EstimatorProphet(Estimator):
             daily_seasonality=daily_seasonality,
         )
 
-    @add_args(params_file="conf/prophet.yml", root_key="/model/fit", as_default=False)
+    @add_args(
+        params_file="backend/conf/prophet.yml", root_key="/model/fit", as_default=False
+    )
     def fit(self, X: pandas.DataFrame, y: pandas.DataFrame, **params):
         assert "ds" in X.columns  # date series
         assert "y" in X.columns  # actual values

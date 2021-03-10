@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 import pandas
 from io import BytesIO
-from ..modules.controller.apicontroller import ApiController
+from .modules.controller.apicontroller import ApiController
 
 
 app = FastAPI()
@@ -36,7 +36,9 @@ async def upload(file: UploadFile = File(...)):
         print("uploaded:", file.filename)
         contents = await file.read()
         # print("contents:", contents.decode('utf-8')[:100])
-        df = pandas.read_csv(BytesIO(contents), encoding="utf-8", parse_dates=True, index_col=0)
+        df = pandas.read_csv(
+            BytesIO(contents), encoding="utf-8", parse_dates=True, index_col=0
+        )
         print("df:", df.columns)
         apc = ApiController()
         predicted_df = apc.predict_trained(df)
@@ -48,7 +50,13 @@ async def upload(file: UploadFile = File(...)):
         code = 1
         detail = str(e)
     finally:
-        return {"code": code, "message": messages[code], "detail": detail, "columns": columns, "data": data}
+        return {
+            "code": code,
+            "message": messages[code],
+            "detail": detail,
+            "columns": columns,
+            "data": data,
+        }
 
 
 @app.get("/")
@@ -58,4 +66,5 @@ async def redirect_index_html():
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
