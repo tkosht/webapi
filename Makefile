@@ -29,8 +29,8 @@ webapi: up
 	docker-compose exec app uvicorn \
         --host=0.0.0.0 \
         --log-config=conf/logging.ini \
-        --app-dir=src/app \
-        webapi:app
+        --app-dir=. \
+        src.app.webapi:app
 
 hello:
 	@sh bin/request_hello.sh
