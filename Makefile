@@ -8,21 +8,21 @@ bash: up
 python: up
 	docker-compose exec app python
 
-vue-install: up
+frontend-install: up
 	docker-compose exec app sh bin/install_vue.sh
 
-vue-init: up
+frontend-init: up
 	docker-compose exec app sh bin/init_frontend.sh
 
-vue-restore: vue-ci
+frontend-restore: frontend-ci
 
-vue-ci: up
+frontend-ci: up
 	docker-compose exec app sh bin/build_vue.sh ci
 
-vue-build: up
+frontend-build: up
 	docker-compose exec app sh bin/build_vue.sh
 
-vue-dev: up
+frontend-dev: up
 	docker-compose exec app sh bin/build_vue.sh dev
 
 webapi: up
