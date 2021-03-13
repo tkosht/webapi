@@ -32,6 +32,9 @@ webapi: up
         --app-dir=. \
         backend.webapi:app
 
+log-access: up
+	tail -0f log/access.log
+
 hello:
 	@sh bin/request_hello.sh
 
