@@ -1,7 +1,7 @@
 <template>
     <div class="row" v-if="!uploading">
         <div class="col-12 text-center">
-        <form id="upload_form">
+          <form id="upload_form">
             <b-form-file
             v-model="file2Upload"
             :state="Boolean(file2Upload)"
@@ -25,7 +25,7 @@
 
             <p />
             <b-table sticky-header :items="sampleItems" head-variant="dark"></b-table>
-        </form>
+          </form>
         </div>
     </div>
     <div class="row" v-else>

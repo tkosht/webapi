@@ -13,3 +13,7 @@ npm install --save-dev @vue/eslint-config-prettier
 npm install --save-dev jest @vue/test-utils
 npm install --save-dev vue-jest
 npm install --save-dev babel-jest
+npm install --save-dev chromedriver
+npm install --save-dev geckodriver
+npm install --save-dev selenium-server
+ncu -u chromedriver

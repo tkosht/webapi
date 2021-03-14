@@ -25,6 +25,13 @@ frontend-build: up
 frontend-dev: up
 	docker-compose exec app sh bin/build_vue.sh dev
 
+frontend-test-unit: up
+	docker-compose exec app bash -c "cd frontend && npm run unit"
+
+frontend-test-e2e: up
+	docker-compose exec app sudo service dbus start
+	docker-compose exec app bash -c "cd frontend && rm -rf user_data && npm run e2e"
+
 webapi: up
 	docker-compose exec app uvicorn \
         --host=0.0.0.0 \
