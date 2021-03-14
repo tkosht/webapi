@@ -3,7 +3,7 @@
 d=$(cd $(dirname $0) && pwd)
 cd $d/../frontend
 
-npm install -save vue vue-router bootstrap-vue bootstrap
+npm install --save vue vue-router bootstrap-vue bootstrap
 npm install --save axios vue-axios
 
 npm install --save-dev webpack-dev-server
@@ -17,3 +17,7 @@ npm install --save-dev chromedriver
 npm install --save-dev geckodriver
 npm install --save-dev selenium-server
 ncu -u chromedriver
+
+npm install
+npm audit fix
+npm ddp
