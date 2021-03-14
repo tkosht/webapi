@@ -8,6 +8,7 @@ if [ "$1" = "dev" ]; then
     npm run dev
     exit $?
 elif [ "$1" = "ci" ]; then
+    rm -rf frontend/node_modules
     npm ci
     exit $?
 fi

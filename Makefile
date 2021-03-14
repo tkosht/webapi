@@ -1,4 +1,4 @@
-default: up
+default: build up
 
 all: run
 

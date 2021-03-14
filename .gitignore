@@ -4,6 +4,7 @@ node_modules/
 dist/
 data/
 img/
+.*.swp
 
 
 # Byte-compiled / optimized / DLL files
