@@ -18,18 +18,4 @@
   "python.testing.unittestEnabled": false,
   "python.testing.nosetestsEnabled": false,
   "python.testing.pytestEnabled": true,
-  "editor.formatOnSave": false,
-  "eslint.autoFixOnSave": true,
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    {
-      "language": "vue",
-      "autoFix": true
-    }
-  ],
-  "prettier.eslintIntegration": true,
-  "eslint.workingDirectories": [
-    "./"
-  ],
 }
