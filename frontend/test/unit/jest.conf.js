@@ -26,5 +26,14 @@ module.exports = {
     '!src/main.js',
     '!src/router/index.js',
     '!**/node_modules/**'
-  ]
+  ],
+  "coverageReporters": [
+    "html",
+    "text-summary",
+    "json",
+    "lcov",
+    "text",
+    "clover"
+  ],
+  "testURL": "http://localhost/",
 }
