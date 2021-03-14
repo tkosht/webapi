@@ -18,11 +18,8 @@
   "python.testing.unittestEnabled": false,
   "python.testing.nosetestsEnabled": false,
   "python.testing.pytestEnabled": true,
-  // デフォルトのコード整形を無効化
   "editor.formatOnSave": false,
-  // ESLint 自動フォーマット有効化
   "eslint.autoFixOnSave": true,
-  // ESLint の Vue.js 設定
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -31,7 +28,6 @@
       "autoFix": true
     }
   ],
-  // Prettier の ESLint 連携
   "prettier.eslintIntegration": true,
   "eslint.workingDirectories": [
     "./"
