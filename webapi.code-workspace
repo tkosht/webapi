@@ -13,7 +13,7 @@
 			"path": "frontend"
 		}
 	],
-	"settings": {}
+	"settings": {},
     "extensions": {
         "recommendations": [
             "ms-python.python",
