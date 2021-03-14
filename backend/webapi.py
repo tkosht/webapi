@@ -50,6 +50,7 @@ async def upload(file: UploadFile = File(...)):
         code = 1
         detail = str(e)
     finally:
+        print("[webapi] done.")
         return {
             "code": code,
             "status": statuses[code],
