@@ -1,13 +1,17 @@
-default: build up
+default: all
 
-all: run
+all: build up
 
+# ==========
+# interaction tasks
 bash: up
 	docker-compose exec app bash
 
 python: up
 	docker-compose exec app python
 
+# ==========
+# frontend tasks
 frontend-install: up
 	docker-compose exec app sh bin/install_vue.sh
 
@@ -32,32 +36,34 @@ frontend-test-e2e: up
 	docker-compose exec app sudo service dbus start
 	docker-compose exec app bash -c "cd frontend && rm -rf user_data && npm run e2e"
 
-webapi: up
+# ==========
+# backend tasks
+backend-webapi: up
 	docker-compose exec app uvicorn \
         --host=0.0.0.0 \
         --log-config=backend/conf/logging.ini \
         --app-dir=. \
         backend.webapi:app
 
-log-access: up
+backend-log-access: up
 	tail -0f log/access.log
 
-hello:
+backend-hello:
 	@sh bin/request_hello.sh
 
-post:
+backend-post:
 	@docker-compose exec app sh bin/request_post.sh
 
-test-requests:
+backend-test-requests:
 	@docker-compose exec app sh bin/test_request.sh
 
 # switch mode
 gpu:
-	@rm -f Dockerfile docker-compose.yml
+	@rm -f docker-compose.yml
 	@ln -s docker/docker-compose.gpu.yml docker-compose.yml
 
 cpu:
-	@rm -f Dockerfile docker-compose.yml
+	@rm -f docker-compose.yml
 	@ln -s docker/docker-compose.cpu.yml docker-compose.yml
 
 # run tasks
@@ -67,6 +73,7 @@ mlflow-run: up
 debug: up
 	docker-compose exec app pudb3 encoder.py
 
+# ==========
 # visualization tasks
 mlflow-ui: up
 	docker-compose exec app mlflow ui --host=0.0.0.0
@@ -81,7 +88,8 @@ tensorboard: up
 	echo $(logdir)
 	docker-compose exec app tensorboard --host=0.0.0.0 --logdir=$(logdir)
 
-# for docker-compose
+# ==========
+# docker-compose aliases
 up:
 	docker-compose up -d app
 
