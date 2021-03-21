@@ -45,7 +45,7 @@ backend-webapi: up
         --app-dir=. \
         backend.webapi:app
 
-backend-unit: up
+backend-test-unit: up
 	docker-compose exec app \
         bash -c "cd backend && python -m pytest test"
 
