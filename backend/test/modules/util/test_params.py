@@ -1,9 +1,9 @@
-from src.modules.util.params import add_params, add_args
+from modules.util.params import add_params, add_args
 
 
 class TestParams(object):
     def test_decorator(self):
-        @add_params("tests/modules/util/conf/params.yml")
+        @add_params("test/modules/util/conf/params.yml")
         def _check_deco(a, b, params):
             assert a == 1.25
             assert b == "hello"
@@ -15,7 +15,7 @@ class TestParams(object):
         _check_deco(a=1.25, b="hello")
 
     def test_args(self):
-        @add_args("tests/modules/util/conf/params.yml")
+        @add_args("test/modules/util/conf/params.yml")
         def _check_deco(a, b, n_encoder_layer, n_decoder_layer, n_heads, n_embedding):
             assert a == 0.25
             assert b == "world"
@@ -27,7 +27,7 @@ class TestParams(object):
         _check_deco(a=0.25, b="world")
 
     def test_args_overwrite(self):
-        @add_args("tests/modules/util/conf/params.yml")
+        @add_args("test/modules/util/conf/params.yml")
         def _check_deco(n_encoder_layer, n_decoder_layer, n_heads, n_embedding):
             assert n_encoder_layer == 3
             assert n_decoder_layer == 5
@@ -38,7 +38,7 @@ class TestParams(object):
         _check_deco(n_encoder_layer=1, n_decoder_layer=7)
 
     def test_args_as_default_false(self):
-        @add_args("tests/modules/util/conf/params.yml", as_default=False)
+        @add_args("test/modules/util/conf/params.yml", as_default=False)
         def _check_deco(n_encoder_layer, n_decoder_layer, n_heads, n_embedding):
             assert n_encoder_layer == 3
             assert n_decoder_layer == 5
@@ -49,7 +49,7 @@ class TestParams(object):
         _check_deco(n_encoder_layer=1, n_decoder_layer=7)
 
     def test_args_as_default_true(self):
-        @add_args("tests/modules/util/conf/params.yml", as_default=True)
+        @add_args("test/modules/util/conf/params.yml", as_default=True)
         def _check_deco(n_encoder_layer, n_decoder_layer, n_heads, n_embedding):
             assert n_encoder_layer == 1
             assert n_decoder_layer == 7
@@ -60,7 +60,7 @@ class TestParams(object):
         _check_deco(n_encoder_layer=1, n_decoder_layer=7)
 
     def test_json(self):
-        @add_params("tests/modules/util/conf/app.json")
+        @add_params("test/modules/util/conf/app.json")
         def _check_deco(a, b, params):
             assert a == -0.25
             assert b == "!!!"
