@@ -1,0 +1,42 @@
+version: 2
+jobs:
+  build-frontend:
+    docker:
+      - image: tkosht/webapi:latest
+    steps:
+      - checkout
+      - run: rm -rf frontend/node_modules frontend/user_data
+      - run: cd frontend && npm ci
+  pytest:
+    docker:
+      - image: tkosht/webapi:latest
+    steps:
+      - checkout
+      - run: cd backend && python -m pytest test
+  jest:
+    docker:
+      - image: tkosht/webapi:latest
+    steps:
+      - checkout
+      - run: cd frontend && npm ci && npm run unit
+    requires:
+      - build-frontend
+  e2e:
+    docker:
+      - image: tkosht/webapi:latest
+    steps:
+      - checkout
+      - run: sudo service dbus start
+      - run: cd frontend && npm ci && npm run build && npm run e2e
+    requires:
+      - build-frontend
+
+workflows:
+  version: 2
+  workflow_tests:
+    jobs:
+    - build-frontend
+    - pytest
+    - jest
+    - e2e
+
