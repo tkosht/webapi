@@ -18,7 +18,7 @@ jobs:
       - image: tkosht/webapi:latest
     steps:
       - checkout
-      - run: cd frontend && npm run unit
+      - run: cd frontend && npm ci && npm run unit
     requires:
       - build-frontend
   e2e:
@@ -26,7 +26,7 @@ jobs:
       - image: tkosht/webapi:latest
     steps:
       - checkout
-      - run: cd frontend && npm run e2e
+      - run: cd frontend && npm ci && npm run e2e
     requires:
       - build-frontend
 
