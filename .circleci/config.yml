@@ -27,7 +27,7 @@ jobs:
     steps:
       - checkout
       - run: sudo service dbus start
-      - run: cd frontend && npm ci && npm build && npm run e2e
+      - run: cd frontend && npm ci && npm run build && npm run e2e
     requires:
       - build-frontend
 
