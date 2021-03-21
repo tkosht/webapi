@@ -2,7 +2,7 @@ version: 2
 jobs:
   hello:
     docker:
-      - image: circleci/python:3.8.6
+      - image: tkosht/webapi:latest
     steps:
       - checkout
       - run: cd backend && python -m pytest test
