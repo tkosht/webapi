@@ -24,6 +24,6 @@ workflows:
   workflow_tests:
     jobs:
     - pytest
-    - jtest
+    - jest
     - e2e
 
