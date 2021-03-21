@@ -1,5 +1,12 @@
 version: 2
 jobs:
+  build:
+    docker:
+      - image: tkosht/webapi:latest
+    steps:
+      - checkout
+      - run: rm -rf frontend/node_modules frontend/user_data
+      - run: cd frontend && user_data && npm ci
   pytest:
     docker:
       - image: tkosht/webapi:latest
@@ -17,13 +24,16 @@ jobs:
       - image: tkosht/webapi:latest
     steps:
       - checkout
-      - run: cd frontend && rm -rf user_data && npm run e2e
+      - run: cd frontend && npm run e2e
 
 workflows:
   version: 2
   workflow_tests:
     jobs:
+    - build
     - pytest
     - jest
     - e2e
+      requires:
+        - build
 
