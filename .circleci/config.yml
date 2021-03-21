@@ -25,6 +25,8 @@ jobs:
     steps:
       - checkout
       - run: cd frontend && npm run e2e
+    requires:
+      - build
 
 workflows:
   version: 2
@@ -34,6 +36,4 @@ workflows:
     - pytest
     - jest
     - e2e
-      requires:
-        - build
 
