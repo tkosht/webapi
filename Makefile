@@ -32,25 +32,6 @@ cpu gpu:
 	@rm -f docker-compose.yml
 	@ln -s docker/docker-compose.$@.yml docker-compose.yml
 
-# # run tasks
-# mlflow-run: up
-# 	docker-compose exec app mlflow run --no-conda .
-# 
-# # ==========
-# # visualization tasks
-# mlflow-ui: up
-# 	docker-compose exec app mlflow ui --host=0.0.0.0
-# 
-# mlflow-server: up
-#     docker-compose exec app mlflow server --host=0.0.0.0 \
-# 		--backend-store-uri sqlite:///result/mlflow.db \
-# 		--default-artifact-root=mlruns
-# 
-# tensorboard: up
-# 	$(eval logdir:=$(shell ls -trd result/* | tail -n 1))
-# 	echo $(logdir)
-# 	docker-compose exec app tensorboard --host=0.0.0.0 --logdir=$(logdir)
-
 # ==========
 # docker-compose aliases
 up:
