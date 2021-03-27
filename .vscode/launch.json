@@ -8,16 +8,8 @@
             "name": "webapi: fastapi",
             "type": "python",
             "request": "launch",
-            "module": "src.app.webapi",
+            "module": "backend.webapi",
             "justMyCode": false
         },
-        {
-            "name": "Python: Current File",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal",
-            "justMyCode": false
-        }
     ]
 }
