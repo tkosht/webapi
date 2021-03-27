@@ -5,6 +5,7 @@
   "files.exclude": {
     "backend/**": true,
     "frontend/**": true,
+    ".pytest_cache/**": true,
   },
   "files.watcherExclude": {
     "**/.git/objects/**": true,

@@ -11,24 +11,23 @@ make
 
 ## build vue environment
 
-### create project
-
-```
-make frontend-init
-```
-
-### install libraries for project
-
-```
-make frontend-install
-```
-
 ### restore vue ci environment
 
 you should use this task after `git clone` this repository
 
 ```
 make frontend-ci
+```
+### create project if you want
+
+```
+make frontend-init
+```
+
+### install libraries for project after init
+
+```
+make frontend-install
 ```
 
 # use
@@ -56,7 +55,7 @@ make backend-webapi
 ## test for api
 
 ```
-make backend-hello backend-post backend-test-requests
+make backend-hello backend-post backend-test-request
 ```
 
 ```
@@ -107,4 +106,3 @@ ody><div id=app></div><script type=text/javascript src=/static/js/manifest.2ae2e
 </html>
 
 ```
-
