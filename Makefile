@@ -10,31 +10,13 @@ bash: up
 python: up
 	docker-compose exec app python
 
-# ==========
-# frontend tasks
-frontend-install: up
-	docker-compose exec app sh bin/install_vue.sh
-
-frontend-init: up
-	docker-compose exec app sh bin/init_frontend.sh
+frontend-install frontend-init frontend-ci frontend-prod frontend-dev frontend-unit frontend-e2e : up
+	$(eval task=$(shell echo "$@" | perl -pe 's/frontend-//'))
+	@echo "runnning task: $(task)"
+	docker-compose exec app sudo service dbus start
+	docker-compose exec app bash -c "cd frontend && make $(task)"
 
 frontend-restore: frontend-ci
-
-frontend-ci: up
-	docker-compose exec app sh bin/build_vue.sh ci
-
-frontend-build: up
-	docker-compose exec app sh bin/build_vue.sh
-
-frontend-dev: up
-	docker-compose exec app sh bin/build_vue.sh dev
-
-frontend-test-unit: up
-	docker-compose exec app bash -c "cd frontend && npm run unit"
-
-frontend-test-e2e: up
-	docker-compose exec app sudo service dbus start
-	docker-compose exec app bash -c "cd frontend && rm -rf user_data && npm run e2e"
 
 # ==========
 # backend tasks

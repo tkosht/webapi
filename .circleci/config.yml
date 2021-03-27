@@ -18,7 +18,7 @@ jobs:
       - image: tkosht/webapi:latest
     steps:
       - checkout
-      - run: cd frontend && npm ci && npm run unit
+      - run: cd frontend && make test-unit
     requires:
       - build-frontend
   e2e:
@@ -27,7 +27,7 @@ jobs:
     steps:
       - checkout
       - run: sudo service dbus start
-      - run: cd frontend && npm ci && npm run build && npm run e2e
+      - run: cd frontend && make test-e2e
     requires:
       - build-frontend
 
