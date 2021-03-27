@@ -8,7 +8,7 @@
             "name": "webapi: fastapi",
             "type": "python",
             "request": "launch",
-            "module": "backend.webapi",
+            "module": "webapi",
             "justMyCode": false
         },
     ]
