@@ -10,38 +10,22 @@ bash: up
 python: up
 	docker-compose exec app python
 
+# ==========
+# frontend tasks
 frontend-install frontend-init frontend-ci frontend-prod frontend-dev frontend-unit frontend-e2e : up
-	$(eval task=$(shell echo "$@" | perl -pe 's/frontend-//'))
-	@echo "runnning task: $(task)"
+	$(eval task_name=$(shell echo "$@" | perl -pe 's/frontend-//'))
+	@echo "runnning task: $(task_name)"
 	docker-compose exec app sudo service dbus start
-	docker-compose exec app bash -c "cd frontend && make $(task)"
+	docker-compose exec app bash -c "cd frontend && make $(task_name)"
 
 frontend-restore: frontend-ci
 
 # ==========
 # backend tasks
-backend-webapi: up
-	docker-compose exec app uvicorn \
-        --host=0.0.0.0 \
-        --log-config=backend/conf/logging.ini \
-        --app-dir=. \
-        backend.webapi:app
-
-backend-test-unit: up
-	docker-compose exec app \
-        bash -c "cd backend && python -m pytest test"
-
-backend-log-access: up
-	tail -0f log/access.log
-
-backend-hello:
-	@sh bin/request_hello.sh
-
-backend-post:
-	@docker-compose exec app sh bin/request_post.sh
-
-backend-test-requests:
-	@docker-compose exec app sh bin/test_request.sh
+backend-webapi backend-test-unit backend-log-access backend-hello backend-post backend-test-request: up
+	$(eval task_name=$(shell echo "$@" | perl -pe 's/backend-//'))
+	@echo "runnning task: $(task_name)"
+	docker-compose exec app bash -c "cd backend && make $(task_name)"
 
 # switch mode
 gpu:
@@ -55,9 +39,6 @@ cpu:
 # run tasks
 mlflow-run: up
 	docker-compose exec app mlflow run --no-conda .
-
-debug: up
-	docker-compose exec app pudb3 encoder.py
 
 # ==========
 # visualization tasks

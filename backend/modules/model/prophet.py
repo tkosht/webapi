@@ -30,15 +30,11 @@ class EstimatorProphet(Estimator):
         self.trained_date = None
 
     @staticmethod
-    @add_args(
-        params_file="backend/conf/prophet.yml", root_key="/model/init", as_default=False
-    )
+    @add_args(params_file="conf/prophet.yml", root_key="/model/init", as_default=False)
     def _create_prophet_model(holidays_df, **params) -> Prophet:
         return Prophet(holidays=holidays_df, **params)
 
-    @add_args(
-        params_file="backend/conf/prophet.yml", root_key="/model/fit", as_default=False
-    )
+    @add_args(params_file="conf/prophet.yml", root_key="/model/fit", as_default=False)
     def fit(self, X: pandas.DataFrame, y: pandas.DataFrame, **params):
         assert "ds" in X.columns  # date series
         assert "y" in X.columns  # actual values

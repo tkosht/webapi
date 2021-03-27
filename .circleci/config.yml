@@ -5,14 +5,14 @@ jobs:
       - image: tkosht/webapi:latest
     steps:
       - checkout
-      - run: rm -rf frontend/node_modules frontend/user_data
+      - run: cd frontend && rm -rf user_data
       - run: cd frontend && npm ci
   pytest:
     docker:
       - image: tkosht/webapi:latest
     steps:
       - checkout
-      - run: cd backend && python -m pytest test
+      - run: cd backend && make test-unit
   jest:
     docker:
       - image: tkosht/webapi:latest
@@ -39,4 +39,3 @@ workflows:
     - pytest
     - jest
     - e2e
-
