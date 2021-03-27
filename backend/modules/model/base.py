@@ -15,4 +15,3 @@ class Estimator(object):
 
     def predict(self, X, **params):
         return X
-
