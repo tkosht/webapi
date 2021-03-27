@@ -22,7 +22,7 @@ frontend-restore: frontend-ci
 
 # ==========
 # backend tasks
-backend-webapi backend-test-unit backend-log-access backend-hello backend-post backend-test-request: up
+backend-webapi backend-test-unit backend-log-access backend-hello backend-post backend-test-request backend-mlflow-server backend-tensorboard: up
 	$(eval task_name=$(shell echo "$@" | perl -pe 's/backend-//'))
 	@echo "runnning task @ backend: $(task_name)"
 	docker-compose exec app bash -c "cd backend && make $(task_name)"
@@ -32,24 +32,24 @@ cpu gpu:
 	@rm -f docker-compose.yml
 	@ln -s docker/docker-compose.$@.yml docker-compose.yml
 
-# run tasks
-mlflow-run: up
-	docker-compose exec app mlflow run --no-conda .
-
-# ==========
-# visualization tasks
-mlflow-ui: up
-	docker-compose exec app mlflow ui --host=0.0.0.0
-
-mlflow-server: up
-    docker-compose exec app mlflow server --host=0.0.0.0 \
-		--backend-store-uri sqlite:///result/mlflow.db \
-		--default-artifact-root=mlruns
-
-tensorboard: up
-	$(eval logdir:=$(shell ls -trd result/* | tail -n 1))
-	echo $(logdir)
-	docker-compose exec app tensorboard --host=0.0.0.0 --logdir=$(logdir)
+# # run tasks
+# mlflow-run: up
+# 	docker-compose exec app mlflow run --no-conda .
+# 
+# # ==========
+# # visualization tasks
+# mlflow-ui: up
+# 	docker-compose exec app mlflow ui --host=0.0.0.0
+# 
+# mlflow-server: up
+#     docker-compose exec app mlflow server --host=0.0.0.0 \
+# 		--backend-store-uri sqlite:///result/mlflow.db \
+# 		--default-artifact-root=mlruns
+# 
+# tensorboard: up
+# 	$(eval logdir:=$(shell ls -trd result/* | tail -n 1))
+# 	echo $(logdir)
+# 	docker-compose exec app tensorboard --host=0.0.0.0 --logdir=$(logdir)
 
 # ==========
 # docker-compose aliases
