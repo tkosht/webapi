@@ -27,7 +27,9 @@ jobs:
     steps:
       - checkout
       - run: sudo service dbus start
-      - run: cd backend && make webapi &
+      - run:
+        command: cd backend && make webapi
+        background: true
       - run: cd frontend && make test-e2e
     requires:
       - build-frontend
