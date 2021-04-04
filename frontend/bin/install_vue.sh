@@ -16,6 +16,7 @@ npm install --save-dev babel-jest
 npm install --save-dev chromedriver
 npm install --save-dev geckodriver
 npm install --save-dev selenium-server
+npm install --save-dev source-map-support
 ncu -u chromedriver
 
 npm install

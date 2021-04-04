@@ -15,6 +15,16 @@
             "sourceMapPathOverrides": {
                 "webpack:///src/*": "${webRoot}/*"
             }
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Debug e2e testcase",
+            "program": "test/e2e/runner.js",
+            "args": [
+              "--config",
+              "test/e2e/nightwatch.conf.js"
+            ]
         }
     ]
 }
