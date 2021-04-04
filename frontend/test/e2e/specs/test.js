@@ -26,7 +26,7 @@ module.exports = {
       .click('button#submit.btn.btn-dark')
       .assert.elementPresent('div.progress')
       .saveScreenshot('./screenshot/' + browser.currentTest.name + '_02_submitted.png')
-      .waitForElementNotPresent('div.progress', 120000)
+      .waitForElementNotPresent('div.progress', 300000)
       .saveScreenshot('./screenshot/' + browser.currentTest.name + '_03_done.png')
       .assert.value('textarea#textArea.form-control', "success: to upload the file 'test.csv'")
       // .useXpath()
