@@ -3,6 +3,7 @@
         <div class="col-12 text-center">
           <form id="upload_form">
             <b-form-file
+            id="upload_file"
             v-model="file2Upload"
             :state="Boolean(file2Upload)"
             placeholder="ファイルを選択するか、ここにドラッグ＆ドロップしてください ..."
@@ -21,7 +22,7 @@
             ></b-form-textarea>
 
             <p />
-            <button class="btn btn-dark" type="submit" @click="doUpload('/upload')" >Upload</button>
+            <button id="submit" class="btn btn-dark" type="submit" @click="doUpload('/upload')" >Upload</button>
 
             <p />
             <b-table sticky-header :items="sampleItems" head-variant="dark"></b-table>
@@ -163,7 +164,7 @@ export default {
           vm.sampleItems = []
           vm.dataItems = arrayLines
         }
-        this.statusText = 'Loaded samples in heads of files'
+        this.statusText = 'Loaded samples in the head of file'
       }
     }
   }

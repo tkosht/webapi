@@ -33,4 +33,7 @@ e2e:
 
 test-unit: ci unit
 
-test-e2e: ci prod  e2e
+test-e2e: ci prod e2e
+
+debug-e2e:
+	npm run debug-e2e
